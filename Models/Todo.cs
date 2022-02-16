@@ -8,5 +8,6 @@ namespace TodoApp.Models
         public string Title { get; set; }
         public bool Done { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
+        public int UserId { get; set; }
     }
 }
