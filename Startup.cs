@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TodoApp.Data;
 
 namespace todoApp
 {
@@ -11,6 +11,7 @@ namespace todoApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<AppDbContext>();
 
         }
 
@@ -25,7 +26,7 @@ namespace todoApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default","{controller=Home}/{action=Index}/{Id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{Id?}");
             });
         }
     }
