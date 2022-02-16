@@ -106,5 +106,31 @@ namespace TodoApp.Controllers
                 throw;
             }
         }
+
+        [HttpPut]
+        [Route("todos/updateTitle/{id}")]
+        async public Task<IActionResult> UpdateTitleAsync([FromServices] AppDbContext context, [FromBody] CreateTodoViewModel model, int id)
+        {
+            var todo = await context.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
+
+            if(!ModelState.IsValid || todo == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                todo.Title = model.Title;
+
+                context.Todos.Update(todo);
+                await context.SaveChangesAsync();
+                return Ok(todo);
+            }
+            catch (System.Exception)
+            {
+                
+                return BadRequest();
+            }
+        }
     }
 }
