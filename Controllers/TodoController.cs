@@ -9,11 +9,10 @@ using TodoApp.ViewModels;
 namespace TodoApp.Controllers
 {
     [ApiController]
-    [Route("v1")]
+    [Route("todos")]
     public class TodoController : ControllerBase
     {
         [HttpGet]
-        [Route("todos")]
         async public Task<IActionResult> GetTodoListAsync([FromServices] AppDbContext context)
         {
             var todos = await context.Todos.AsNoTracking().ToListAsync();
@@ -21,7 +20,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpGet]
-        [Route("todos/{id}")]
+        [Route("{id}")]
         async public Task<IActionResult> GetTodoByIdAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var todo = await context.Todos.AsNoTracking().FirstOrDefaultAsync(todo => todo.Id == id);
@@ -30,7 +29,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost]
-        [Route("todos")]
         async public Task<IActionResult> PostAsync([FromServices] AppDbContext context, [FromBody] CreateTodoViewModel model)
         {
             if (!ModelState.IsValid)
@@ -49,7 +47,7 @@ namespace TodoApp.Controllers
             {
                 await context.Todos.AddAsync(todo);
                 await context.SaveChangesAsync();
-                return Created("v1/v1/{todo.Id}", todo);
+                return Created("v1/{todo.Id}", todo);
             }
             catch (System.Exception e)
             {
@@ -58,7 +56,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpPut]
-        [Route("todos/{id}")]
+        [Route("{id}")]
         async public Task<IActionResult> UpdateDoneAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var todo = await context.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
