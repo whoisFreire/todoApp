@@ -9,8 +9,8 @@ using TodoApp.Data;
 namespace todoApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220217004408_CreatingRelationship")]
-    partial class CreatingRelationship
+    [Migration("20220217014700_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,12 +36,9 @@ namespace todoApp.Migrations
                     b.Property<int>("UserForeignKey")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserForeignKey");
 
                     b.ToTable("Todos");
                 });
@@ -66,15 +63,17 @@ namespace todoApp.Migrations
             modelBuilder.Entity("TodoApp.Models.Todo", b =>
                 {
                     b.HasOne("TodoApp.Models.User", "User")
-                        .WithMany("MyProperty")
-                        .HasForeignKey("UserId");
+                        .WithMany("Todos")
+                        .HasForeignKey("UserForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("TodoApp.Models.User", b =>
                 {
-                    b.Navigation("MyProperty");
+                    b.Navigation("Todos");
                 });
 #pragma warning restore 612, 618
         }

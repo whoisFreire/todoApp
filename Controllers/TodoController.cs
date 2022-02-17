@@ -9,7 +9,7 @@ using TodoApp.ViewModels;
 namespace TodoApp.Controllers
 {
     [ApiController]
-    [Route("todos")]
+    [Route("api/v1/[controller]")]
     public class TodoController : ControllerBase
     {
         [HttpGet]
