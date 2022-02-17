@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TodoApp.Data;
 using TodoApp.Models;
 using TodoApp.ViewModels;
@@ -36,6 +37,31 @@ namespace TodoApp.Controllers
                 
                 return BadRequest();
             }
+        }
+
+        [HttpDelete]
+        [Route("deleteAccount")]
+        async public Task<IActionResult> DeleteUserAsync([FromServices] AppDbContext context, [FromRoute] int id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(user => user.Id == id);
+
+            if(user == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+
         }
     }
 }

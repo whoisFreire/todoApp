@@ -9,5 +9,15 @@ namespace TodoApp.Data
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlite("DataSource=app.db;cache=shared");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Todo>()
+                .HasOne(todo => todo.User)
+                .WithMany(user => user.Todos)
+                .HasForeignKey(todo => todo.UserForeignKey)
+                .HasPrincipalKey(user => user.Id);
+
+        }
     }
 }

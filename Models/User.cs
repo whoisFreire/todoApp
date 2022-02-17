@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TodoApp.Models
 {
     public class User
@@ -6,5 +8,6 @@ namespace TodoApp.Models
         public string Email { get; set; }
         public string Password { get; set; }
         
+        public List<Todo> Todos { get; set; }
     }
 }
