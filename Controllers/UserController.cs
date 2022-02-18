@@ -11,8 +11,7 @@ namespace TodoApp.Controllers
      [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
-        [Route("signup")]
+        [HttpPost("signup")]
         async public Task<IActionResult> CreateUserAsync([FromServices] AppDbContext context, [FromBody] CreateUserViewModel model)
         {
             if(!ModelState.IsValid)
@@ -39,8 +38,7 @@ namespace TodoApp.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("deleteAccount")]
+        [HttpDelete("deleteAccount")]
         async public Task<IActionResult> DeleteUserAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var user = await context.Users.FirstOrDefaultAsync(user => user.Id == id);

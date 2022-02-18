@@ -19,8 +19,7 @@ namespace TodoApp.Controllers
             return Ok(todos);
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}")]
         async public Task<IActionResult> GetTodoByIdAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var todo = await context.Todos.AsNoTracking().FirstOrDefaultAsync(todo => todo.Id == id);
@@ -55,8 +54,7 @@ namespace TodoApp.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("{id}")]
+        [HttpPut("{id}")]
         async public Task<IActionResult> UpdateDoneAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var todo = await context.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
@@ -81,8 +79,7 @@ namespace TodoApp.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("todos/{id}")]
+        [HttpDelete("todos/{id}")]
         async public Task<IActionResult> DeleteAsync([FromServices] AppDbContext context, [FromRoute] int id)
         {
             var todo = await context.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
@@ -105,8 +102,7 @@ namespace TodoApp.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("todos/updateTitle/{id}")]
+        [HttpPut("todos/updateTitle/{id}")]
         async public Task<IActionResult> UpdateTitleAsync([FromServices] AppDbContext context, [FromBody] CreateTodoViewModel model, int id)
         {
             var todo = await context.Todos.FirstOrDefaultAsync(todo => todo.Id == id);
