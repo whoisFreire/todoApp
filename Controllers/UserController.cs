@@ -59,7 +59,7 @@ namespace TodoApp.Controllers
             catch (System.Exception)
             {
                 
-                throw;
+                return BadRequest();
             }
 
         }
