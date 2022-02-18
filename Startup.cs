@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using TodoApp.Data;
 
 namespace todoApp
@@ -12,7 +13,6 @@ namespace todoApp
         {
             services.AddControllers();
             services.AddDbContext<AppDbContext>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

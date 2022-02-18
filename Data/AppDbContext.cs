@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TodoApp.Models;
 
 namespace TodoApp.Data
@@ -8,7 +9,19 @@ namespace TodoApp.Data
         public DbSet<Todo> Todos { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlite("DataSource=app.db;cache=shared");
+        private IConfiguration _configuration;
+
+        public AppDbContext(IConfiguration iconfig)
+        {
+            _configuration = iconfig;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
+            var dataSource = this._configuration.GetValue<string>("Connection:dataSource");
+            var cache = this._configuration.GetValue<string>("Connection:cache");
+            
+            optionsBuilder.UseSqlite("DataSource={dataSource}.db;cache={cache}");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
